@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Favicon Icon -->
+    <link rel="shortcut icon" type="image/x-icon" href="/assets/images/favicon.png">
+
+    <title>NAVER SPEECH HACKATHON 2019</title>
+    <meta name="description"
+          content="Experience attending “NAVER AI HACKATHON SPEECH(2019-09-17~ 2019-10-13)”">
+
+    <link rel="canonical" href="http://psi9730.github.io/development-blog/stt/2019/11/05/Naver-Speech-Hackathon.html">
+    <link rel="alternate" type="application/rss+xml" title="Seungil's development Blog" href="http://psi9730.github.io/development-blog/feed.xml">
+
+    <script type="text/javascript" src="/bower_components/jquery/jquery.min.js"></script>
+
+    <!-- Third-Party CSS -->
+    <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/bower_components/octicons/octicons/octicons.css">
+    <link rel="stylesheet" href="/bower_components/hover/css/hover-min.css">
+    <link rel="stylesheet" href="/bower_components/primer-markdown/dist/user-content.min.css">
+    <link rel="stylesheet" href="/assets/css/syntax.css">
+
+    <!-- My CSS -->
+    <link rel="stylesheet" href="/assets/css/common.css">
+
+    <!-- CSS set in page -->
+    
+
+    <!-- CSS set in layout -->
+    
+    <link rel="stylesheet" href="/assets/css/sidebar-post-nav.css">
+    
+
+    <script type="text/javascript" src="/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+
+</head>
+
+
+    <body>
+
+    <header class="site-header">
+    <div class="container">
+        <a id="site-header-brand" href="/" title="Park Seungil">
+            <span class="octicon octicon-mark-github"></span> Park Seungil
+        </a>
+        <nav class="site-header-nav" role="navigation">
+            
+            <a href="/"
+               class=" site-header-nav-item hvr-underline-from-center"
+               target=""
+               title="Home">
+                Home
+            </a>
+            
+            <a href="/open-source"
+               class=" site-header-nav-item hvr-underline-from-center"
+               target=""
+               title="Open-Source">
+                Open-Source
+            </a>
+            
+            <a href="/blog"
+               class=" site-header-nav-item hvr-underline-from-center"
+               target=""
+               title="Blog">
+                Blog
+            </a>
+            
+            <a href="/bookmark"
+               class=" site-header-nav-item hvr-underline-from-center"
+               target=""
+               title="Bookmark">
+                Bookmark
+            </a>
+            
+            <a href="/about"
+               class=" site-header-nav-item hvr-underline-from-center"
+               target=""
+               title="About">
+                About
+            </a>
+            
+        </nav>
+    </div>
+</header>
+
+
+        <div class="content">
+            <section class="jumbotron geopattern" data-pattern-id="NAVER SPEECH HACKATHON 2019">
+    <div class="container">
+        <div id="jumbotron-meta-info">
+            <h1>NAVER SPEECH HACKATHON 2019</h1>
+            <span class="meta-info">
+                
+                
+                <span class="octicon octicon-calendar"></span> 2019/11/05
+                
+            </span>
+        </div>
+    </div>
+</section>
+<script>
+    $(document).ready(function(){
+
+        $('.geopattern').each(function(){
+            $(this).geopattern($(this).data('pattern-id'));
+        });
+
+    });
+</script>
+<article class="post container" itemscope itemtype="http://schema.org/BlogPosting">
+
+    <div class="row">
+
+        
+        <div class="col-md-8 markdown-body">
+
+            <p>Experience attending “NAVER AI HACKATHON SPEECH(2019-09-17~ 2019-10-13)”</p>
+
+<h2 id="section">참가 후기</h2>
+<p>첫번째 AI해커톤인만큼 설레고 재밌는 경험이었다. 처음엔 STT에 분야에 대한 사전 지식이 없어서, 음성을 데이터화 시키는 mel spectogram 부터 이를 처리하는 다양한 모델들을 <a href="https://arxiv.org/abs/1508.01211">listen and spell</a>, <a href="https://arxiv.org/abs/1706.03762">attention is all you need</a>, <a href="http://proceedings.mlr.press/v48/amodei16.pdf">deep speech 2</a>, <a href="https://arxiv.org/pdf/1211.3711.pdf">RNN Transducer</a>을 차근차근 공부했고, 그중 구조화가 쉬우며 간단한 음성 input에 대해 performance가 좋은 seq2seq 모델을 선택했다.</p>
+
+<p>논문을 읽는 것과 실제로 코드를 구현하는것은 매우 재밌으면서 힘들다는 것을 느꼈고, 특히 성능를 올리는 방법을 고민할 때는 지식의 부족함을 크게 느꼈다. 오프라인 당일 날에는 24시간 시간이 주어졌지만 트레이닝 시간만 18시간 넘게 들어가는 상황에서 크게 성능을 향상 시킬수 없을 것이라 예상했다. 하지만 hackathon 당일날 페어코딩으로 상당한 집중력을 발휘 할 수 있었고, 튜터님들의 조언과 함께 성능을 대폭 상승시키는 행복한 경험을 할 수 있었다. 당일날에는 트레이닝 된 모델을 활용하는 beam search, ensemble에 초점을 맞춰서 코딩을 진행했다.</p>
+
+<p>끝까지 최선을 다했고, 9등이라는 아쉽지만 뜻깊었던 결과를 맞이할 수 있었다. 이후 1,2,3위 팀의 질의응답시간에는 구현 방식에 대한 많은 질문을 했었다. 대회를 진행하면서 계속 성능의 차이가 모델의 구조에서 크게 올것이라 생각했는데 data preprocessing, weight initialization에서 놓친 부분이 많았었다는 사실이 가장 기억에 남는다. 어떤 작업이든 기본 실력을 쌓는 것이 가장 중요하다라는 것을 크게 느꼈다.</p>
+
+<p><img src="/assets/images/hackathon-image.jpeg" alt="HAPPY HACKATHON!" /></p>
+
+<h2 id="section-1">참고자료</h2>
+<p><a href="https://github.com/elzino/naver_ai_hackathon_speech">행복코딩’s HACKATHON GITHUB REPO</a></p>
+
+
+            <!-- Comments -->
+            
+<div class="comments">
+    <div id="disqus_thread"></div>
+    <script>
+        /**
+         * RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+         * LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables
+         */
+        /*
+         var disqus_config = function () {
+         this.page.url = PAGE_URL; // Replace PAGE_URL with your page's canonical URL variable
+         this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+         };
+         */
+        (function() { // DON'T EDIT BELOW THIS LINE
+            var d = document, s = d.createElement('script');
+
+            s.src = '//my_disque_settings/embed.js';
+
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+</div>
+
+
+        </div>
+
+        <div class="col-md-4">
+            <h3>Post Directory</h3>
+<div id="post-directory-module">
+<section class="post-directory">
+    <!-- Links that trigger the jumping -->
+    <!-- Added by javascript below -->
+    <dl></dl>
+</section>
+</div>
+
+<script type="text/javascript">
+
+    $(document).ready(function(){
+        $( "article h2" ).each(function( index ) {
+            $(".post-directory dl").append("<dt><a class=\"jumper\" hre=#" +
+                    $(this).attr("id")
+                    + ">"
+                    + $(this).text()
+                    + "</a></dt>");
+
+            var children = $(this).nextUntil("h2", "h3")
+
+            children.each(function( index ) {
+                $(".post-directory dl").append("<dd><a class=\"jumper\" hre=#" +
+                        $(this).attr("id")
+                        + ">"
+                        + "&nbsp;&nbsp;- " + $(this).text()
+                        + "</a></dd>");
+            });
+        });
+
+        var fixmeTop = $('#post-directory-module').offset().top - 100;       // get initial position of the element
+
+        $(window).scroll(function() {                  // assign scroll event listener
+
+            var currentScroll = $(window).scrollTop(); // get current position
+
+            if (currentScroll >= fixmeTop) {           // apply position: fixed if you
+                $('#post-directory-module').css({      // scroll to that element or below it
+                    top: '100px',
+                    position: 'fixed',
+                    width: 'inherit'
+                });
+            } else {                                   // apply position: static
+                $('#post-directory-module').css({      // if you scroll above it
+                    position: 'inherit',
+                    width: 'inherit'
+                });
+            }
+
+        });
+
+        $("a.jumper").on("click", function( e ) {
+
+            e.preventDefault();
+
+            $("body, html").animate({
+                scrollTop: ($( $(this).attr('hre') ).offset().top - 100)
+            }, 600);
+
+        });
+    });
+
+</script>
+        </div>
+        
+
+    </div>
+
+</article>
+
+        </div>
+
+    <footer class="container">
+
+    <div class="site-footer">
+
+        <div class="copyright pull-left">
+            <!-- Please keep this line to let others know where this theme comes from. Thank you :D -->
+            Power by <a href="https://github.com/psi9730/development-blog">psi9730</a>
+        </div>
+
+        <a href="https://github.com/psi9730" target="_blank" aria-label="view source code">
+            <span class="mega-octicon octicon-mark-github" title="GitHub"></span>
+        </a>
+
+        <div class="pull-right">
+            <a href="javascript:window.scrollTo(0,0)" >TOP</a>
+        </div>
+
+    </div>
+
+    <!-- Third-Party JS -->
+    <script type="text/javascript" src="/bower_components/geopattern/js/geopattern.min.js"></script>
+
+    <!-- My JS -->
+    <script type="text/javascript" src="/assets/js/script.js"></script>
+
+    
+
+    
+
+</footer>
+
+
+    </body>
+
+</html>

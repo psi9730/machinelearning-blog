@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Favicon Icon -->
+    <link rel="shortcut icon" type="image/x-icon" href="/assets/images/favicon.png">
+
+    <title>Self-Attention with Relative Position Representations</title>
+    <meta name="description"
+          content="Paper review about “Self-Attention with Relative Position Representations(2018-03-06)”">
+
+    <link rel="canonical" href="http://psi9730.github.io/nlp/2019/10/22/Character-Level-Language-Modeling-With-Deeper-Self-Attention.html">
+    <link rel="alternate" type="application/rss+xml" title="Seungil's develop Blog" href="http://psi9730.github.io/feed.xml">
+
+    <script type="text/javascript" src="/bower_components/jquery/jquery.min.js"></script>
+
+    <!-- Third-Party CSS -->
+    <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/bower_components/octicons/octicons/octicons.css">
+    <link rel="stylesheet" href="/bower_components/hover/css/hover-min.css">
+    <link rel="stylesheet" href="/bower_components/primer-markdown/dist/user-content.min.css">
+    <link rel="stylesheet" href="/assets/css/syntax.css">
+
+    <!-- My CSS -->
+    <link rel="stylesheet" href="/assets/css/common.css">
+
+    <!-- CSS set in page -->
+    
+
+    <!-- CSS set in layout -->
+    
+    <link rel="stylesheet" href="/assets/css/sidebar-post-nav.css">
+    
+
+    <script type="text/javascript" src="/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+
+</head>
+
+
+    <body>
+
+    <header class="site-header">
+    <div class="container">
+        <a id="site-header-brand" href="/" title="Park Seungil">
+            <span class="octicon octicon-mark-github"></span> Park Seungil
+        </a>
+        <nav class="site-header-nav" role="navigation">
+            
+            <a href="/"
+               class=" site-header-nav-item hvr-underline-from-center"
+               target=""
+               title="Home">
+                Home
+            </a>
+            
+            <a href="/open-source"
+               class=" site-header-nav-item hvr-underline-from-center"
+               target=""
+               title="Open-Source">
+                Open-Source
+            </a>
+            
+            <a href="/blog"
+               class=" site-header-nav-item hvr-underline-from-center"
+               target=""
+               title="Blog">
+                Blog
+            </a>
+            
+            <a href="/bookmark"
+               class=" site-header-nav-item hvr-underline-from-center"
+               target=""
+               title="Bookmark">
+                Bookmark
+            </a>
+            
+            <a href="/about"
+               class=" site-header-nav-item hvr-underline-from-center"
+               target=""
+               title="About">
+                About
+            </a>
+            
+        </nav>
+    </div>
+</header>
+
+
+        <div class="content">
+            <section class="jumbotron geopattern" data-pattern-id="Self-Attention with Relative Position Representations">
+    <div class="container">
+        <div id="jumbotron-meta-info">
+            <h1>Self-Attention with Relative Position Representations</h1>
+            <span class="meta-info">
+                
+                
+                <span class="octicon octicon-calendar"></span> 2019/10/22
+                
+            </span>
+        </div>
+    </div>
+</section>
+<script>
+    $(document).ready(function(){
+
+        $('.geopattern').each(function(){
+            $(this).geopattern($(this).data('pattern-id'));
+        });
+
+    });
+</script>
+<article class="post container" itemscope itemtype="http://schema.org/BlogPosting">
+
+    <div class="row">
+
+        
+        <div class="col-md-8 markdown-body">
+
+            <p>Paper review about “Self-Attention with Relative Position Representations(2018-03-06)”</p>
+
+<h2 id="introduction">Introduction</h2>
+<p>transformer은 recurrent, convolutional neural network와 달리 모델 자체에서 order of sequence을 표현하지 못하는 단점이 존재한다. 이에 사인, 코사인 주기 함수를 이용해서 absolute position을 input에 더해주는 식의 position embedding을 활용하게 되었다. 이번 논문에서는 이러한 position을 relative하게 representation하는 방법을 제안한다. self-attention mechanism에 relative position 또는 distance between sequence elements을 추가한다. 학습 중에 추가한 relative position을 구하며, 모든 heads에 동일한 relative position을 적용함으로써 space complexity을 줄였다.</p>
+
+<h2 id="proposed-architecture">Proposed Architecture</h2>
+<p>### Relation-aware Self-Attention<br />
+positional information을 담기 위해 input elements간에 pairwise relationships을 이용한다. x_i, x_j 사이의 edge의 종류를 a_i_j^V, a_i_j^K 두가지 종류로 둔다. <br />
+<img src="/assets/images/self-attention-with-relative-position-representations-1.png" alt="image-1" /><br />
+<img src="/assets/images/self-attention-with-relative-position-representations-2.png" alt="image-2" /><br />
+3번 식은 주어진 attention head에 선택된 값이 다음 encoder or decoder layers에게 유용한가를 구할 때 유용하다.<br />
+4번 식은 attention head값을 변화시켜주는 값이다. 두가지 pairwise information을 더해줌으로써 additional linear transformations 없이 relation을 나타낼 수 있다.</p>
+
+<h3 id="relative-position-representations">Relative Position Representations</h3>
+<p><img src="/assets/images/self-attention-with-relative-position-representations-3.png" alt="image-3" /><br />
+<img src="/assets/images/self-attention-with-relative-position-representations-4.png" alt="image-4" /></p>
+
+<p>Input elements간의 거리가 일정이상 커지면 relation position information이 크게 유용하지 않다는 가정하에 다음과 같은 clip구조를 제안한다. 이에 edge label은 2k+1 unique가 있으며, 이를 통해 sequence length에 대한 고려를 포함시킬 수 있다. 해당 논문에서는 k=64에서 최대 BLEU을 가지는 것이 확인된다.</p>
+
+<h3 id="efficient-implementation">Efficient Implementation</h3>
+<p><img src="/assets/images/self-attention-with-relative-position-representations-5.png" alt="image-5" /><br />
+By relative position representations sharing across attention heads, storing relative position representations space complexity = O(h<em>d_a</em>n^2) to O(d_a<em>n^2). By relative position representations sharing across sequences, all space complexity = O(bhnd) to O(bhnd + d_a</em>n^2)<br />
+그리고 식 4번을 5번 식으로 바꿈으로써 parallel multiplcation이 가능하도록 한다.</p>
+
+<h2 id="section">참고문헌</h2>
+<ul>
+  <li><a href="https://arxiv.org/abs/1706.03762">Self-Attention with Relative Position Representations</a></li>
+</ul>
+
+
+
+            <!-- Comments -->
+            
+<div class="comments">
+    <div id="disqus_thread"></div>
+    <script>
+        /**
+         * RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+         * LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables
+         */
+        /*
+         var disqus_config = function () {
+         this.page.url = PAGE_URL; // Replace PAGE_URL with your page's canonical URL variable
+         this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+         };
+         */
+        (function() { // DON'T EDIT BELOW THIS LINE
+            var d = document, s = d.createElement('script');
+
+            s.src = '//my_disque_settings/embed.js';
+
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+</div>
+
+
+        </div>
+
+        <div class="col-md-4">
+            <h3>Post Directory</h3>
+<div id="post-directory-module">
+<section class="post-directory">
+    <!-- Links that trigger the jumping -->
+    <!-- Added by javascript below -->
+    <dl></dl>
+</section>
+</div>
+
+<script type="text/javascript">
+
+    $(document).ready(function(){
+        $( "article h2" ).each(function( index ) {
+            $(".post-directory dl").append("<dt><a class=\"jumper\" hre=#" +
+                    $(this).attr("id")
+                    + ">"
+                    + $(this).text()
+                    + "</a></dt>");
+
+            var children = $(this).nextUntil("h2", "h3")
+
+            children.each(function( index ) {
+                $(".post-directory dl").append("<dd><a class=\"jumper\" hre=#" +
+                        $(this).attr("id")
+                        + ">"
+                        + "&nbsp;&nbsp;- " + $(this).text()
+                        + "</a></dd>");
+            });
+        });
+
+        var fixmeTop = $('#post-directory-module').offset().top - 100;       // get initial position of the element
+
+        $(window).scroll(function() {                  // assign scroll event listener
+
+            var currentScroll = $(window).scrollTop(); // get current position
+
+            if (currentScroll >= fixmeTop) {           // apply position: fixed if you
+                $('#post-directory-module').css({      // scroll to that element or below it
+                    top: '100px',
+                    position: 'fixed',
+                    width: 'inherit'
+                });
+            } else {                                   // apply position: static
+                $('#post-directory-module').css({      // if you scroll above it
+                    position: 'inherit',
+                    width: 'inherit'
+                });
+            }
+
+        });
+
+        $("a.jumper").on("click", function( e ) {
+
+            e.preventDefault();
+
+            $("body, html").animate({
+                scrollTop: ($( $(this).attr('hre') ).offset().top - 100)
+            }, 600);
+
+        });
+    });
+
+</script>
+        </div>
+        
+
+    </div>
+
+</article>
+
+        </div>
+
+    <footer class="container">
+
+    <div class="site-footer">
+
+        <div class="copyright pull-left">
+            <!-- Please keep this line to let others know where this theme comes from. Thank you :D -->
+            Power by <a href="https://github.com/psi9730/psi9730.github.io">psi9730</a>
+        </div>
+
+        <a href="https://github.com/psi9730" target="_blank" aria-label="view source code">
+            <span class="mega-octicon octicon-mark-github" title="GitHub"></span>
+        </a>
+
+        <div class="pull-right">
+            <a href="javascript:window.scrollTo(0,0)" >TOP</a>
+        </div>
+
+    </div>
+
+    <!-- Third-Party JS -->
+    <script type="text/javascript" src="/bower_components/geopattern/js/geopattern.min.js"></script>
+
+    <!-- My JS -->
+    <script type="text/javascript" src="/assets/js/script.js"></script>
+
+    
+
+    
+
+</footer>
+
+
+    </body>
+
+</html>
