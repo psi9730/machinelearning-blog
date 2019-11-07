@@ -3,10 +3,10 @@
   <channel>
     <title>Seungil&#39;s development Blog</title>
     <description>Computer Science Tech</description>
-    <link>http://psi9730.github.io/development-blog/</link>
-    <atom:link href="http://psi9730.github.io/development-blog/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Thu, 07 Nov 2019 12:22:18 +0900</pubDate>
-    <lastBuildDate>Thu, 07 Nov 2019 12:22:18 +0900</lastBuildDate>
+    <link>http://psi9730.github.io/machinelearning-blog/</link>
+    <atom:link href="http://psi9730.github.io/machinelearning-blog/feed.xml" rel="self" type="application/rss+xml"/>
+    <pubDate>Thu, 07 Nov 2019 14:05:44 +0900</pubDate>
+    <lastBuildDate>Thu, 07 Nov 2019 14:05:44 +0900</lastBuildDate>
     <generator>Jekyll v3.0.1</generator>
     
       <item>
@@ -26,8 +26,8 @@ Language Understanding(2018-10-11)”&lt;/p&gt;
 &lt;p&gt;&lt;a href=&quot;/assets/files/BERT_ Pre-training of Deep Bidirectional Transformers for Language Understanding.pdf&quot;&gt;BERT-PDF-download&lt;/a&gt;&lt;/p&gt;
 </description>
         <pubDate>Wed, 06 Nov 2019 00:00:00 +0900</pubDate>
-        <link>http://psi9730.github.io/development-blog/nlp/2019/11/06/BERT.html</link>
-        <guid isPermaLink="true">http://psi9730.github.io/development-blog/nlp/2019/11/06/BERT.html</guid>
+        <link>http://psi9730.github.io/machinelearning-blog/nlp/2019/11/06/BERT.html</link>
+        <guid isPermaLink="true">http://psi9730.github.io/machinelearning-blog/nlp/2019/11/06/BERT.html</guid>
         
         <category>nlp</category>
         
@@ -53,8 +53,8 @@ Language Understanding(2018-10-11)”&lt;/p&gt;
 &lt;p&gt;&lt;a href=&quot;https://github.com/elzino/naver_ai_hackathon_speech&quot;&gt;행복코딩’s HACKATHON GITHUB REPO&lt;/a&gt;&lt;/p&gt;
 </description>
         <pubDate>Tue, 05 Nov 2019 00:00:00 +0900</pubDate>
-        <link>http://psi9730.github.io/development-blog/stt/2019/11/05/Naver-Speech-Hackathon.html</link>
-        <guid isPermaLink="true">http://psi9730.github.io/development-blog/stt/2019/11/05/Naver-Speech-Hackathon.html</guid>
+        <link>http://psi9730.github.io/machinelearning-blog/stt/2019/11/05/Naver-Speech-Hackathon.html</link>
+        <guid isPermaLink="true">http://psi9730.github.io/machinelearning-blog/stt/2019/11/05/Naver-Speech-Hackathon.html</guid>
         
         <category>stt</category>
         
@@ -113,8 +113,8 @@ character and accuracy of model is best on layer 64 tranformers. 그리고 적�
 &lt;/ul&gt;
 </description>
         <pubDate>Wed, 23 Oct 2019 00:00:00 +0900</pubDate>
-        <link>http://psi9730.github.io/development-blog/nlp/2019/10/23/Character-Level-Language-Modeling-With-Deeper-Self-Attention.html</link>
-        <guid isPermaLink="true">http://psi9730.github.io/development-blog/nlp/2019/10/23/Character-Level-Language-Modeling-With-Deeper-Self-Attention.html</guid>
+        <link>http://psi9730.github.io/machinelearning-blog/nlp/2019/10/23/Character-Level-Language-Modeling-With-Deeper-Self-Attention.html</link>
+        <guid isPermaLink="true">http://psi9730.github.io/machinelearning-blog/nlp/2019/10/23/Character-Level-Language-Modeling-With-Deeper-Self-Attention.html</guid>
         
         <category>nlp</category>
         
@@ -156,8 +156,8 @@ By relative position representations sharing across attention heads, storing rel
 
 </description>
         <pubDate>Tue, 22 Oct 2019 00:00:00 +0900</pubDate>
-        <link>http://psi9730.github.io/development-blog/nlp/2019/10/22/Self-Attention-With-Relative-Position_representations.html</link>
-        <guid isPermaLink="true">http://psi9730.github.io/development-blog/nlp/2019/10/22/Self-Attention-With-Relative-Position_representations.html</guid>
+        <link>http://psi9730.github.io/machinelearning-blog/nlp/2019/10/22/Self-Attention-With-Relative-Position_representations.html</link>
+        <guid isPermaLink="true">http://psi9730.github.io/machinelearning-blog/nlp/2019/10/22/Self-Attention-With-Relative-Position_representations.html</guid>
         
         <category>nlp</category>
         
@@ -202,8 +202,8 @@ Sentence&amp;amp;word embedding &amp;gt; Sentence embedding &amp;gt; word embedd
 &lt;/ul&gt;
 </description>
         <pubDate>Sun, 20 Oct 2019 00:00:00 +0900</pubDate>
-        <link>http://psi9730.github.io/development-blog/nlp/2019/10/20/Universal-Sentence-Encoder.html</link>
-        <guid isPermaLink="true">http://psi9730.github.io/development-blog/nlp/2019/10/20/Universal-Sentence-Encoder.html</guid>
+        <link>http://psi9730.github.io/machinelearning-blog/nlp/2019/10/20/Universal-Sentence-Encoder.html</link>
+        <guid isPermaLink="true">http://psi9730.github.io/machinelearning-blog/nlp/2019/10/20/Universal-Sentence-Encoder.html</guid>
         
         <category>nlp</category>
         
@@ -263,8 +263,8 @@ sub-layer가 residual connection으로 연결, 그 후에는 layer-normalization
 
 </description>
         <pubDate>Thu, 17 Oct 2019 00:00:00 +0900</pubDate>
-        <link>http://psi9730.github.io/development-blog/nlp/2019/10/17/Attention-Is-All-You-Need.html</link>
-        <guid isPermaLink="true">http://psi9730.github.io/development-blog/nlp/2019/10/17/Attention-Is-All-You-Need.html</guid>
+        <link>http://psi9730.github.io/machinelearning-blog/nlp/2019/10/17/Attention-Is-All-You-Need.html</link>
+        <guid isPermaLink="true">http://psi9730.github.io/machinelearning-blog/nlp/2019/10/17/Attention-Is-All-You-Need.html</guid>
         
         <category>nlp</category>
         
