@@ -20,7 +20,7 @@ Averaging words/bi-grams embedding 이후 feedforward DNN에 태워 임베딩 �
 * 인코더는 PTB(Penn Tree Bank) tokenized string을 인풋으로 받고 512-d 벡터(sentence Embedding)을 반환
 * Multi-task learning을 위해 Skip-Thought like task, Conversational input-response task, Classifications등의 다운 스트림 task에 문장 임베딩을 얻는 학습을 시킴.
 
-![universal-sentence-encoder](/assets/images/universal-sentence-encoder.png)
+![universal-sentence-encoder]({{site.baseurl}}/assets/images/universal-sentence-encoder.png)
 
 ## Transfer Learning 
 word level Transfer/ no transfer learning의 두 모델을 베이스라인으로 삼음.

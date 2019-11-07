@@ -14,7 +14,7 @@ Experience attending "NAVER AI HACKATHON SPEECH(2019-09-17~ 2019-10-13)"
 
 끝까지 최선을 다했고, 9등이라는 아쉽지만 뜻깊었던 결과를 맞이할 수 있었다. 이후 1,2,3위 팀의 질의응답시간에는 구현 방식에 대한 많은 질문을 했었다. 대회를 진행하면서 계속 성능의 차이가 모델의 구조에서 크게 올것이라 생각했는데 data preprocessing, weight initialization에서 놓친 부분이 많았었다는 사실이 가장 기억에 남는다. 어떤 작업이든 기본 실력을 쌓는 것이 가장 중요하다라는 것을 크게 느꼈다.
 
-![HAPPY HACKATHON!](/assets/images/hackathon-image.jpeg)
+![HAPPY HACKATHON!]({{site.baseurl}}/assets/images/hackathon-image.jpeg)
 
 ## 참고자료
 [행복코딩's HACKATHON GITHUB REPO](https://github.com/elzino/naver_ai_hackathon_speech)

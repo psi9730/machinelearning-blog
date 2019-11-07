@@ -13,19 +13,19 @@ transformer은 recurrent, convolutional neural network와 달리 모델 자체�
 ## Proposed Architecture
 ### Relation-aware Self-Attention
 positional information을 담기 위해 input elements간에 pairwise relationships을 이용한다. x_i, x_j 사이의 edge의 종류를 a_i_j^V, a_i_j^K 두가지 종류로 둔다. 
-![image-1](/assets/images/self-attention-with-relative-position-representations-1.png)
-![image-2](/assets/images/self-attention-with-relative-position-representations-2.png)
+![image-1]({{site.baseurl}}/assets/images/self-attention-with-relative-position-representations-1.png)
+![image-2]({{site.baseurl}}/assets/images/self-attention-with-relative-position-representations-2.png)
 3번 식은 주어진 attention head에 선택된 값이 다음 encoder or decoder layers에게 유용한가를 구할 때 유용하다.
 4번 식은 attention head값을 변화시켜주는 값이다. 두가지 pairwise information을 더해줌으로써 additional linear transformations 없이 relation을 나타낼 수 있다.
 
 ### Relative Position Representations
-![image-3](/assets/images/self-attention-with-relative-position-representations-3.png)
-![image-4](/assets/images/self-attention-with-relative-position-representations-4.png)
+![image-3]({{site.baseurl}}/assets/images/self-attention-with-relative-position-representations-3.png)
+![image-4]({{site.baseurl}}/assets/images/self-attention-with-relative-position-representations-4.png)
 
 Input elements간의 거리가 일정이상 커지면 relation position information이 크게 유용하지 않다는 가정하에 다음과 같은 clip구조를 제안한다. 이에 edge label은 2k+1 unique가 있으며, 이를 통해 sequence length에 대한 고려를 포함시킬 수 있다. 해당 논문에서는 k=64에서 최대 BLEU을 가지는 것이 확인된다.
 
 ### Efficient Implementation
-![image-5](/assets/images/self-attention-with-relative-position-representations-5.png)
+![image-5]({{site.baseurl}}/assets/images/self-attention-with-relative-position-representations-5.png)
 By relative position representations sharing across attention heads, storing relative position representations space complexity = O(h*d_a*n^2) to O(d_a*n^2). By relative position representations sharing across sequences, all space complexity = O(bhnd) to O(bhnd + d_a*n^2)
 그리고 식 4번을 5번 식으로 바꿈으로써 parallel multiplcation이 가능하도록 한다.
 
