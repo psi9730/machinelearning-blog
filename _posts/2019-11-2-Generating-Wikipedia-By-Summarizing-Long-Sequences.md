@@ -35,7 +35,7 @@ input reference documents의 길이가 매우 길기 때문에 end-to-end가 아
     using bigram union with ground truth text
 
 ### Abstractive Stage
-![image-1](/assets/images/generating-wikipedia-by-summarizing-long-sequences-1.png)
+![image-1]({{site.baseurl}}/assets/images/generating-wikipedia-by-summarizing-long-sequences-1.png)
 title과 ranked paragraphs를 concat시키고 난 뒤에 pretrained model의 input에 맞게 tokenize시킨다. 이후에 model에 집어넣어 generated article을 구한다.
 
 ## Transformer Decoder
@@ -48,7 +48,7 @@ transformer의 decoder구조만 이용하기 위해 input -> output 구조에서
 * memory-compressed attention
     key, value에 1-d convolution을 적용함으로써, divide the number of activations by a
     compression factor 효과를 얻는다.
-![image-2](/assets/images/generating-wikipedia-by-summarizing-long-sequences-2.png)
+![image-2]({{site.baseurl}}/assets/images/generating-wikipedia-by-summarizing-long-sequences-2.png)
 
 ## Experiments
 seq2seq- attention < transformer-Encoder-Decoder < Transformer-D = Transformer-DMCA 순으로 perplexity performance을 보인다.

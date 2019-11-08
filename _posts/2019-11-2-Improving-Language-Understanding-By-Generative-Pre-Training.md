@@ -14,22 +14,22 @@ Paper review about "Improving-Language-Understanding-By-Generative-Pre-Training\
 ## Challenging for generalized unsupervised learning
 1. 어떤 optimization objective을 써야 transfer하기에 적합한 pre train학습을 할 수 있을까?
     Deep autoencoder, use standard language modeling objective to maximize likelihood
-    ![image-1](/assets/images/improving-language-understanding-by-generative-pre-training-1.png)
-    ![image-2](/assets/images/improving-language-understanding-by-generative-pre-training-2.png)
+    ![image-1]({{site.baseurl}}/assets/images/improving-language-understanding-by-generative-pre-training-1.png)
+    ![image-2]({{site.baseurl}}/assets/images/improving-language-understanding-by-generative-pre-training-2.png)
 2. How to Transfer learned representaions to the target task에 대한 정답이 아직 없다.
     Auxiliary objective function를 추가로 이용함과 동시에 구조를 각각의 task에 맞게 조금씩 변형시킨다. 밑에 식에서 L_2는 supervised training을 위한 objective, L_1은 auxiliary unsupervised learning에서 구한 objective이다.
-    ![image-3](/assets/images/improving-language-understanding-by-generative-pre-training-3.png)
-    ![image-4](/assets/images/improving-language-understanding-by-generative-pre-training-4.png)
+    ![image-3]({{site.baseurl}}/assets/images/improving-language-understanding-by-generative-pre-training-3.png)
+    ![image-4]({{site.baseurl}}/assets/images/improving-language-understanding-by-generative-pre-training-4.png)
 
 ## Experiments
 1. pretrainig데이터
      BookCorpus dataset을 사용하였다.(이 데이터셋은 지금은 원본을 구하기 힘들다.ㅠㅠ 직접 크롤링해야한다. [https://github.com/soskek/bookcorpus](https://github.com/soskek/bookcorpus) 를 이용하자)
 
 2. fine-tuning 데이터
-![image-5](/assets/images/improving-language-understanding-by-generative-pre-training-5.png)
+![image-5]({{site.baseurl}}/assets/images/improving-language-understanding-by-generative-pre-training-5.png)
 
 ## Analysis
-![image-6](/assets/images/improving-language-understanding-by-generative-pre-training-6.png)
+![image-6]({{site.baseurl}}/assets/images/improving-language-understanding-by-generative-pre-training-6.png)
 layer을 크게 할수록 좋은 성능을 내며, LSTM보다 transformer을 이용했을 때 더 좋은 성능을 냄을 볼 수 있다.
 
 ## 추가지식
