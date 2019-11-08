@@ -23,7 +23,7 @@ Paper review about "Improving-Language-Understanding-By-Generative-Pre-Training\
 
 ## Experiments
 1. pretrainig데이터
-     BookCorpus dataset을 사용하였다.(이 데이터셋은 지금은 원본을 구하기 힘들다.ㅠㅠ 직접 크롤링해야한다. [https://github.com/soskek/bookcorpus](https://github.com/soskek/bookcorpus) 를 이용하자)
+     BookCorpus dataset을 사용하였다.([https://github.com/soskek/bookcorpus](https://github.com/soskek/bookcorpus) 를 이용하자)
 
 2. fine-tuning 데이터
 ![image-5]({{site.baseurl}}/assets/images/improving-language-understanding-by-generative-pre-training-5.png)
