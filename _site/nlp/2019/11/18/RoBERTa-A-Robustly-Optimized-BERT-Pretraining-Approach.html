@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Favicon Icon -->
+    <link rel="shortcut icon" type="image/x-icon" href="/machinelearning-blog/assets/images/favicon.png">
+
+    <title>RoBERTa A Robustly Optimized BERT Pretraining Approach.</title>
+    <meta name="description"
+          content="Paper review on “RoBERTa: A Robustly Optimized BERT Pretraining Approach(2019-7-26)”">
+
+    <link rel="canonical" href="http://psi9730.github.io/machinelearning-blog/nlp/2019/11/18/RoBERTa-A-Robustly-Optimized-BERT-Pretraining-Approach.html">
+    <link rel="alternate" type="application/rss+xml" title="Seungil's development Blog" href="http://psi9730.github.io/machinelearning-blog/feed.xml">
+
+    <script type="text/javascript" src="/machinelearning-blog/bower_components/jquery/jquery.min.js"></script>
+
+    <!-- Third-Party CSS -->
+    <link rel="stylesheet" href="/machinelearning-blog/bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/machinelearning-blog/bower_components/octicons/octicons/octicons.css">
+    <link rel="stylesheet" href="/machinelearning-blog/bower_components/hover/css/hover-min.css">
+    <link rel="stylesheet" href="/machinelearning-blog/bower_components/primer-markdown/dist/user-content.min.css">
+    <link rel="stylesheet" href="/machinelearning-blog/assets/css/syntax.css">
+
+    <!-- My CSS -->
+    <link rel="stylesheet" href="/machinelearning-blog/assets/css/common.css">
+
+    <!-- CSS set in page -->
+    
+
+    <!-- CSS set in layout -->
+    
+    <link rel="stylesheet" href="/machinelearning-blog/assets/css/sidebar-post-nav.css">
+    
+
+    <script type="text/javascript" src="/machinelearning-blog/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+
+</head>
+
+
+    <body>
+
+    <header class="site-header">
+    <div class="container">
+        <a id="site-header-brand" href="/machinelearning-blog/" title="Park Seungil">
+            <span class="octicon octicon-mark-github"></span> Park Seungil
+        </a>
+        <nav class="site-header-nav" role="navigation">
+            
+            <a href="/machinelearning-blog/"
+               class=" site-header-nav-item hvr-underline-from-center"
+               target=""
+               title="Home">
+                Home
+            </a>
+            
+            <a href="/machinelearning-blog/open-source"
+               class=" site-header-nav-item hvr-underline-from-center"
+               target=""
+               title="Open-Source">
+                Open-Source
+            </a>
+            
+            <a href="/machinelearning-blog/blog"
+               class=" site-header-nav-item hvr-underline-from-center"
+               target=""
+               title="Blog">
+                Blog
+            </a>
+            
+            <a href="/machinelearning-blog/bookmark"
+               class=" site-header-nav-item hvr-underline-from-center"
+               target=""
+               title="Bookmark">
+                Bookmark
+            </a>
+            
+            <a href="/machinelearning-blog/about"
+               class=" site-header-nav-item hvr-underline-from-center"
+               target=""
+               title="About">
+                About
+            </a>
+            
+        </nav>
+    </div>
+</header>
+
+
+        <div class="content">
+            <section class="jumbotron geopattern" data-pattern-id="RoBERTa A Robustly Optimized BERT Pretraining Approach.">
+    <div class="container">
+        <div id="jumbotron-meta-info">
+            <h1>RoBERTa A Robustly Optimized BERT Pretraining Approach.</h1>
+            <span class="meta-info">
+                
+                
+                <span class="octicon octicon-calendar"></span> 2019/11/18
+                
+            </span>
+        </div>
+    </div>
+</section>
+<script>
+    $(document).ready(function(){
+
+        $('.geopattern').each(function(){
+            $(this).geopattern($(this).data('pattern-id'));
+        });
+
+    });
+</script>
+<article class="post container" itemscope itemtype="http://schema.org/BlogPosting">
+
+    <div class="row">
+
+        
+        <div class="col-md-8 markdown-body">
+
+            <p>Paper review on “RoBERTa: A Robustly Optimized BERT Pretraining Approach(2019-7-26)”</p>
+
+<h2 id="abstract">Abstract</h2>
+<ul>
+  <li>하이퍼파라미터와 training data size 의 중요성을 보여주는 논문이다.</li>
+  <li>GLUE, RACE, SQuAD에서 STOA를 달성</li>
+</ul>
+
+<h2 id="introduction">Introduction</h2>
+
+<h3 id="modification-on-bert">modification on BERT</h3>
+<ul>
+  <li>더 큰 batch size, epoch으로 학습한다</li>
+  <li>NSP를 적용시키지 않는다</li>
+  <li>더 긴 sequences로 학습한다</li>
+  <li>masking patter을 epoch마다 변화시켜준다</li>
+</ul>
+
+<h3 id="contribution">contribution</h3>
+<ul>
+  <li>better design choices and training strategies</li>
+  <li>CC-News which is new data</li>
+  <li>better masked language model pretraining</li>
+</ul>
+
+<h2 id="experimental-setup">Experimental Setup</h2>
+
+<h3 id="implementation">Implementation</h3>
+<ol>
+  <li>Adam epsilon term</li>
+  <li>B_2 = 0.98</li>
+  <li>large batch size</li>
+  <li>full-length sequences</li>
+</ol>
+
+<h3 id="data">Data</h3>
+<p>increasing data size 는 end task performance를 올려준다.<br />
+1. BOOKCORPUS plus ENGLISH WIKIPEDIA<br />
+2. CC-NEWS: collected from the English protion of the CommonCrawl News dataset<br />
+3. OPENWEBTEXT: text is web content extracted from URLS shared on Reddit<br />
+4. STORIES: story like style of Winograd Schemas</p>
+
+<h3 id="evaluation">Evaluation</h3>
+<p>GLUE, SQuAD, RACE</p>
+
+<h2 id="training-procedure-analysis">Training Procedure Analysis</h2>
+
+<h3 id="static-vs-dynamic-masking">Static vs Dynamic Masking</h3>
+<p>기존 BERT는 하나의 sentence에 masking이 하나<br />
+RoBERTa는 10개의 duplicated sentence를 만든다.<br />
+<img src="/machinelearning-blog/assets/images/2019-11-18-RoBERTa A Robustly Optimized BERT Pretraining Approach-2.png" alt="image-2" /></p>
+
+<h3 id="model-inut-format-and-next-sentence-prediction">Model Inut Format and Next Sentence Prediction</h3>
+<ol>
+  <li>
+    <p>SEGMENT-PAIR+NSP<br />
+input has a pair of segments from natural <strong>sentences</strong></p>
+  </li>
+  <li>
+    <p>SENTENCE-PAIR+NSP<br />
+input has a pair of natural sentences from <strong>document</strong></p>
+  </li>
+  <li>
+    <p>FULL-SENTENCES<br />
+packed with full sentences sampled <strong>contiguously</strong> from one or more documents.</p>
+  </li>
+  <li>
+    <p>DOC-SENTENCES<br />
+packed with full sentences from documents which not cross document boundaries</p>
+  </li>
+</ol>
+
+<p>특정 분야에 대해서 NSP는 장점을 보이기도 단점을 보이기도한다.<br />
+DOC-SENTENCES가 FULL-SENTENCES보다 성능이 좋지만 DOC-SENTENCES는 batch size를 조절해야한다는 구현상의 단점이 있어 본 논문에서는 FULL-SENTENCES를 채택한다.<br />
+본 논문에서는 NO NSP, FULL-SENTENCES를 사용한다.</p>
+
+<p><img src="/machinelearning-blog/assets/images/2019-11-18-RoBERTa A Robustly Optimized BERT Pretraining Approach-3.png" alt="image-3" /></p>
+
+<h3 id="training-with-large-batches">Training with large batches</h3>
+<p><img src="/machinelearning-blog/assets/images/2019-11-18-RoBERTa A Robustly Optimized BERT Pretraining Approach-4.png" alt="image-4" /></p>
+
+<h3 id="text-encoding">Text Encoding</h3>
+<p>unicode characters 는 큰 데이터셋을 encoding할 때 sizeable portion을 차지한다.<br />
+이에 bytes characters를 base subword units로 이용하여 많은 양의 data(over 50K units)를 표현할 수 있도록 한다.<br />
+실제 성능이 많이 좋아지진 않지만 universal encoding scheme이 가지는 장점이 있을 것이라 주장</p>
+
+<h2 id="roberta">RoBERTa</h2>
+<ol>
+  <li>dynamic masking</li>
+  <li>FULL-SENTENCES without NSP Loss</li>
+  <li>large mini-batches</li>
+  <li>large byte-level BPE</li>
+</ol>
+
+<h3 id="important-factors">Important factors</h3>
+<ol>
+  <li>data used for pretraining</li>
+  <li>the number of training passes through the data<br />
+<img src="/machinelearning-blog/assets/images/2019-11-18-RoBERTa A Robustly Optimized BERT Pretraining Approach-5.png" alt="image-5" /></li>
+</ol>
+
+<h2 id="results">Results</h2>
+<p>good performance on GLUE, SQuAD, RACE tasks<br />
+ephasize do not rely on data augmentation, ensemble and multi-task finetuning<br />
+<img src="/machinelearning-blog/assets/images/2019-11-18-RoBERTa A Robustly Optimized BERT Pretraining Approach-6.png" alt="image-6" /><br />
+<img src="/machinelearning-blog/assets/images/2019-11-18-RoBERTa A Robustly Optimized BERT Pretraining Approach-7.png" alt="image-7" /><br />
+<img src="/machinelearning-blog/assets/images/2019-11-18-RoBERTa A Robustly Optimized BERT Pretraining Approach-8.png" alt="image-8" /></p>
+
+<h2 id="conclusion">conclusion</h2>
+<ul>
+  <li>performance improved by training the model longer, with bigger batch or more data.</li>
+  <li>Removing NSP and applying dynamic masking pattern</li>
+  <li>add CC-NEWS dataset</li>
+</ul>
+
+
+            <!-- Comments -->
+            
+<div class="comments">
+    <div id="disqus_thread"></div>
+    <script>
+        /**
+         * RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+         * LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables
+         */
+        /*
+         var disqus_config = function () {
+         this.page.url = PAGE_URL; // Replace PAGE_URL with your page's canonical URL variable
+         this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+         };
+         */
+        (function() { // DON'T EDIT BELOW THIS LINE
+            var d = document, s = d.createElement('script');
+
+            s.src = '//my_disque_settings/embed.js';
+
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+</div>
+
+
+        </div>
+
+        <div class="col-md-4">
+            <h3>Post Directory</h3>
+<div id="post-directory-module">
+<section class="post-directory">
+    <!-- Links that trigger the jumping -->
+    <!-- Added by javascript below -->
+    <dl></dl>
+</section>
+</div>
+
+<script type="text/javascript">
+
+    $(document).ready(function(){
+        $( "article h2" ).each(function( index ) {
+            $(".post-directory dl").append("<dt><a class=\"jumper\" hre=#" +
+                    $(this).attr("id")
+                    + ">"
+                    + $(this).text()
+                    + "</a></dt>");
+
+            var children = $(this).nextUntil("h2", "h3")
+
+            children.each(function( index ) {
+                $(".post-directory dl").append("<dd><a class=\"jumper\" hre=#" +
+                        $(this).attr("id")
+                        + ">"
+                        + "&nbsp;&nbsp;- " + $(this).text()
+                        + "</a></dd>");
+            });
+        });
+
+        var fixmeTop = $('#post-directory-module').offset().top - 100;       // get initial position of the element
+
+        $(window).scroll(function() {                  // assign scroll event listener
+
+            var currentScroll = $(window).scrollTop(); // get current position
+
+            if (currentScroll >= fixmeTop) {           // apply position: fixed if you
+                $('#post-directory-module').css({      // scroll to that element or below it
+                    top: '100px',
+                    position: 'fixed',
+                    width: 'inherit'
+                });
+            } else {                                   // apply position: static
+                $('#post-directory-module').css({      // if you scroll above it
+                    position: 'inherit',
+                    width: 'inherit'
+                });
+            }
+
+        });
+
+        $("a.jumper").on("click", function( e ) {
+
+            e.preventDefault();
+
+            $("body, html").animate({
+                scrollTop: ($( $(this).attr('hre') ).offset().top - 100)
+            }, 600);
+
+        });
+    });
+
+</script>
+        </div>
+        
+
+    </div>
+
+</article>
+
+        </div>
+
+    <footer class="container">
+
+    <div class="site-footer">
+
+        <div class="copyright pull-left">
+            <!-- Please keep this line to let others know where this theme comes from. Thank you :D -->
+            Power by <a href="https://github.com/psi9730/development-blog">psi9730</a>
+        </div>
+
+        <a href="https://github.com/psi9730" target="_blank" aria-label="view source code">
+            <span class="mega-octicon octicon-mark-github" title="GitHub"></span>
+        </a>
+
+        <div class="pull-right">
+            <a href="javascript:window.scrollTo(0,0)" >TOP</a>
+        </div>
+
+    </div>
+
+    <!-- Third-Party JS -->
+    <script type="text/javascript" src="/machinelearning-blog/bower_components/geopattern/js/geopattern.min.js"></script>
+
+    <!-- My JS -->
+    <script type="text/javascript" src="/machinelearning-blog/assets/js/script.js"></script>
+
+    
+
+    
+
+</footer>
+
+
+    </body>
+
+</html>

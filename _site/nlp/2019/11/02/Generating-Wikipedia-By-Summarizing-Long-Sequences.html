@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Favicon Icon -->
+    <link rel="shortcut icon" type="image/x-icon" href="/machinelearning-blog/assets/images/favicon.png">
+
+    <title>Generating Wikipedia By Summarizing Long Sequences</title>
+    <meta name="description"
+          content="Paper review about “Generating Wikipedia By Summarizing Long Sequences(2018-01-30)”">
+
+    <link rel="canonical" href="http://psi9730.github.io/machinelearning-blog/nlp/2019/11/02/Generating-Wikipedia-By-Summarizing-Long-Sequences.html">
+    <link rel="alternate" type="application/rss+xml" title="Seungil's development Blog" href="http://psi9730.github.io/machinelearning-blog/feed.xml">
+
+    <script type="text/javascript" src="/machinelearning-blog/bower_components/jquery/jquery.min.js"></script>
+
+    <!-- Third-Party CSS -->
+    <link rel="stylesheet" href="/machinelearning-blog/bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/machinelearning-blog/bower_components/octicons/octicons/octicons.css">
+    <link rel="stylesheet" href="/machinelearning-blog/bower_components/hover/css/hover-min.css">
+    <link rel="stylesheet" href="/machinelearning-blog/bower_components/primer-markdown/dist/user-content.min.css">
+    <link rel="stylesheet" href="/machinelearning-blog/assets/css/syntax.css">
+
+    <!-- My CSS -->
+    <link rel="stylesheet" href="/machinelearning-blog/assets/css/common.css">
+
+    <!-- CSS set in page -->
+    
+
+    <!-- CSS set in layout -->
+    
+    <link rel="stylesheet" href="/machinelearning-blog/assets/css/sidebar-post-nav.css">
+    
+
+    <script type="text/javascript" src="/machinelearning-blog/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+
+</head>
+
+
+    <body>
+
+    <header class="site-header">
+    <div class="container">
+        <a id="site-header-brand" href="/machinelearning-blog/" title="Park Seungil">
+            <span class="octicon octicon-mark-github"></span> Park Seungil
+        </a>
+        <nav class="site-header-nav" role="navigation">
+            
+            <a href="/machinelearning-blog/"
+               class=" site-header-nav-item hvr-underline-from-center"
+               target=""
+               title="Home">
+                Home
+            </a>
+            
+            <a href="/machinelearning-blog/open-source"
+               class=" site-header-nav-item hvr-underline-from-center"
+               target=""
+               title="Open-Source">
+                Open-Source
+            </a>
+            
+            <a href="/machinelearning-blog/blog"
+               class=" site-header-nav-item hvr-underline-from-center"
+               target=""
+               title="Blog">
+                Blog
+            </a>
+            
+            <a href="/machinelearning-blog/bookmark"
+               class=" site-header-nav-item hvr-underline-from-center"
+               target=""
+               title="Bookmark">
+                Bookmark
+            </a>
+            
+            <a href="/machinelearning-blog/about"
+               class=" site-header-nav-item hvr-underline-from-center"
+               target=""
+               title="About">
+                About
+            </a>
+            
+        </nav>
+    </div>
+</header>
+
+
+        <div class="content">
+            <section class="jumbotron geopattern" data-pattern-id="Generating Wikipedia By Summarizing Long Sequences">
+    <div class="container">
+        <div id="jumbotron-meta-info">
+            <h1>Generating Wikipedia By Summarizing Long Sequences</h1>
+            <span class="meta-info">
+                
+                
+                <span class="octicon octicon-calendar"></span> 2019/11/02
+                
+            </span>
+        </div>
+    </div>
+</section>
+<script>
+    $(document).ready(function(){
+
+        $('.geopattern').each(function(){
+            $(this).geopattern($(this).data('pattern-id'));
+        });
+
+    });
+</script>
+<article class="post container" itemscope itemtype="http://schema.org/BlogPosting">
+
+    <div class="row">
+
+        
+        <div class="col-md-8 markdown-body">
+
+            <p>Paper review about “Generating Wikipedia By Summarizing Long Sequences(2018-01-30)”</p>
+
+<h2 id="introduction">Introduction</h2>
+<p>Multi Documents을 summarize하는 wiki를 만드는 것을 목적으로한다. WikiSum Dataset을 제작하였으며, Transformer Decoder Only architecture을 제안하였으며, memory usage에 이점을 가지는 DMCA(Transformer Decoder with memnory-compressed attention), memory compressed한 구조를 제안했다. 또한 LSTM, RNN이 아닌 Transformer가 long sequence을 처리함에 있어서 이점을 가진 점이 본 task에 장점을 가짐을 강조함.</p>
+
+<h2 id="summarization">Summarization</h2>
+<ul>
+  <li>Extractive Summary: 원문 단어만을 이용해 Summary</li>
+  <li>Abstractive Summary: 원문 외의 단어를 활용해 Summary</li>
+  <li>Multi-document Summary(본 논문에서 채택한 summarization방법): 여러 document를 한번에 summary 한다.</li>
+</ul>
+
+<h2 id="wikisum-dataset">WikiSum Dataset</h2>
+<ul>
+  <li>cited sources: C_i 로 해당 위키가 cited 한 소스 article을 말한다.</li>
+  <li>web search results: reference가 부족한 경우 web crawling을 통해 관련 자료를 모은다.</li>
+</ul>
+
+<h2 id="training-method">Training Method</h2>
+<p>input reference documents의 길이가 매우 길기 때문에 end-to-end가 아니라 extractive summarization을 통해 중요시되는 paragraphs을 뽑는 과정, 해당 paragraphs를 통해 wiki을 generate하는 abstractive stage로 나누었다.</p>
+
+<h3 id="extractive-summarization">Extractive Summarization</h3>
+<ol>
+  <li>First L tokens<br />
+ 첫번째 L tokens만 뽑는다.</li>
+  <li>TF-IDF<br />
+ TF-IDF를 통해 query’s words의 Tf-idf summation을 통해 ranking을 나누어 paragraphs를 구한다.</li>
+  <li>TextRank<br />
+ Google에서 제시한 page rank구조에서 node를 paragraph, edge을 similarity measure로 해서 paragraphs rank을 구한다.</li>
+  <li>SumBasic<br />
+ 해당 article에서 나오는 words의 빈도를 다 더해서 가장 높은 sentence을 구하는데, words in the highest sentence choosen 의 빈도는 제곱을 통해 낮게 한뒤 다음 highest sentence를 구한다.</li>
+  <li>Cheating<br />
+ using bigram union with ground truth text</li>
+</ol>
+
+<h3 id="abstractive-stage">Abstractive Stage</h3>
+<p><img src="/machinelearning-blog/assets/images/generating-wikipedia-by-summarizing-long-sequences-1.png" alt="image-1" /><br />
+title과 ranked paragraphs를 concat시키고 난 뒤에 pretrained model의 input에 맞게 tokenize시킨다. 이후에 model에 집어넣어 generated article을 구한다.</p>
+
+<h2 id="transformer-decoder">Transformer Decoder</h2>
+<p>transformer의 decoder구조만 이용하기 위해 input -&gt; output 구조에서 input을 input + separator token + output을 decoder에 넣는 구조로 바꾼다. 이를 통해 parameters 반을 줄일 수 있었으며, 이후 결과값을 보면 encoder + decoder구조보다 높은 성능을 보인다.( decoder에 output만을 예측하는 것이 아닌 input+ output을 함께넣음으로서 regularization기능을 하게되는건 아닐까?)<br />
+(x_1, …., x_n) -&gt; (y_1, …., y_m) to (x_1, …, x_n, $, y_1, …., y_m)</p>
+
+<h2 id="transformer-decoder-with-memory-compressed-attentiont-dmca">Transformer Decoder With Memory-Compressed Attention(T-DMCA)</h2>
+<ul>
+  <li>local-attention<br />
+  input을 블락단위로 나누어서 각각 attention을 구한뒤 merge시키는 구조.</li>
+  <li>memory-compressed attention<br />
+  key, value에 1-d convolution을 적용함으로써, divide the number of activations by a<br />
+  compression factor 효과를 얻는다.<br />
+<img src="/machinelearning-blog/assets/images/generating-wikipedia-by-summarizing-long-sequences-2.png" alt="image-2" /></li>
+</ul>
+
+<h2 id="experiments">Experiments</h2>
+<p>seq2seq- attention &lt; transformer-Encoder-Decoder &lt; Transformer-D = Transformer-DMCA 순으로 perplexity performance을 보인다.</p>
+
+<h2 id="section">추가지식</h2>
+<ol>
+  <li>
+    <p>Tf-idf ? <br />
+Idf = log(전체 문서수 / 단어t가 포함된 문서의 수)<br />
+Tf = 해당 문서에 특정 단어의 빈도<br />
+Tf-idf = Tf * Idf<br />
+특정 문서 내에서 단어 빈도가 높고, 전체 문서에서 그 단어가 포함된 문서가 적다면 이 값은 높아진다.</p>
+  </li>
+  <li>
+    <p>Perplexity? <br />
+단어를 예측할 때 헷갈리는 정도. Perplexity=50이면 해당 단어를 예측할 때 50개의 선택지에서 고민이 됨을 뜻한다.</p>
+  </li>
+</ol>
+
+<h2 id="section-1">참고문헌</h2>
+<ul>
+  <li><a href="https://arxiv.org/pdf/1801.10198.pdf">Generating Wikipedia By Summarizing Long Sequences</a></li>
+</ul>
+
+
+            <!-- Comments -->
+            
+<div class="comments">
+    <div id="disqus_thread"></div>
+    <script>
+        /**
+         * RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+         * LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables
+         */
+        /*
+         var disqus_config = function () {
+         this.page.url = PAGE_URL; // Replace PAGE_URL with your page's canonical URL variable
+         this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+         };
+         */
+        (function() { // DON'T EDIT BELOW THIS LINE
+            var d = document, s = d.createElement('script');
+
+            s.src = '//my_disque_settings/embed.js';
+
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+</div>
+
+
+        </div>
+
+        <div class="col-md-4">
+            <h3>Post Directory</h3>
+<div id="post-directory-module">
+<section class="post-directory">
+    <!-- Links that trigger the jumping -->
+    <!-- Added by javascript below -->
+    <dl></dl>
+</section>
+</div>
+
+<script type="text/javascript">
+
+    $(document).ready(function(){
+        $( "article h2" ).each(function( index ) {
+            $(".post-directory dl").append("<dt><a class=\"jumper\" hre=#" +
+                    $(this).attr("id")
+                    + ">"
+                    + $(this).text()
+                    + "</a></dt>");
+
+            var children = $(this).nextUntil("h2", "h3")
+
+            children.each(function( index ) {
+                $(".post-directory dl").append("<dd><a class=\"jumper\" hre=#" +
+                        $(this).attr("id")
+                        + ">"
+                        + "&nbsp;&nbsp;- " + $(this).text()
+                        + "</a></dd>");
+            });
+        });
+
+        var fixmeTop = $('#post-directory-module').offset().top - 100;       // get initial position of the element
+
+        $(window).scroll(function() {                  // assign scroll event listener
+
+            var currentScroll = $(window).scrollTop(); // get current position
+
+            if (currentScroll >= fixmeTop) {           // apply position: fixed if you
+                $('#post-directory-module').css({      // scroll to that element or below it
+                    top: '100px',
+                    position: 'fixed',
+                    width: 'inherit'
+                });
+            } else {                                   // apply position: static
+                $('#post-directory-module').css({      // if you scroll above it
+                    position: 'inherit',
+                    width: 'inherit'
+                });
+            }
+
+        });
+
+        $("a.jumper").on("click", function( e ) {
+
+            e.preventDefault();
+
+            $("body, html").animate({
+                scrollTop: ($( $(this).attr('hre') ).offset().top - 100)
+            }, 600);
+
+        });
+    });
+
+</script>
+        </div>
+        
+
+    </div>
+
+</article>
+
+        </div>
+
+    <footer class="container">
+
+    <div class="site-footer">
+
+        <div class="copyright pull-left">
+            <!-- Please keep this line to let others know where this theme comes from. Thank you :D -->
+            Power by <a href="https://github.com/psi9730/development-blog">psi9730</a>
+        </div>
+
+        <a href="https://github.com/psi9730" target="_blank" aria-label="view source code">
+            <span class="mega-octicon octicon-mark-github" title="GitHub"></span>
+        </a>
+
+        <div class="pull-right">
+            <a href="javascript:window.scrollTo(0,0)" >TOP</a>
+        </div>
+
+    </div>
+
+    <!-- Third-Party JS -->
+    <script type="text/javascript" src="/machinelearning-blog/bower_components/geopattern/js/geopattern.min.js"></script>
+
+    <!-- My JS -->
+    <script type="text/javascript" src="/machinelearning-blog/assets/js/script.js"></script>
+
+    
+
+    
+
+</footer>
+
+
+    </body>
+
+</html>

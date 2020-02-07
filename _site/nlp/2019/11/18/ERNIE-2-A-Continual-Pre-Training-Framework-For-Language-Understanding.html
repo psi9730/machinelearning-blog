@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Favicon Icon -->
+    <link rel="shortcut icon" type="image/x-icon" href="/machinelearning-blog/assets/images/favicon.png">
+
+    <title>ERNIE:2.0 A Continual pre-traiing framework for language understanding</title>
+    <meta name="description"
+          content="Paper review on “ERNIE:2.0 A Continual pre-traiing framework for language understanding(2019-7-29)”">
+
+    <link rel="canonical" href="http://psi9730.github.io/machinelearning-blog/nlp/2019/11/18/ERNIE-2-A-Continual-Pre-Training-Framework-For-Language-Understanding.html">
+    <link rel="alternate" type="application/rss+xml" title="Seungil's development Blog" href="http://psi9730.github.io/machinelearning-blog/feed.xml">
+
+    <script type="text/javascript" src="/machinelearning-blog/bower_components/jquery/jquery.min.js"></script>
+
+    <!-- Third-Party CSS -->
+    <link rel="stylesheet" href="/machinelearning-blog/bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/machinelearning-blog/bower_components/octicons/octicons/octicons.css">
+    <link rel="stylesheet" href="/machinelearning-blog/bower_components/hover/css/hover-min.css">
+    <link rel="stylesheet" href="/machinelearning-blog/bower_components/primer-markdown/dist/user-content.min.css">
+    <link rel="stylesheet" href="/machinelearning-blog/assets/css/syntax.css">
+
+    <!-- My CSS -->
+    <link rel="stylesheet" href="/machinelearning-blog/assets/css/common.css">
+
+    <!-- CSS set in page -->
+    
+
+    <!-- CSS set in layout -->
+    
+    <link rel="stylesheet" href="/machinelearning-blog/assets/css/sidebar-post-nav.css">
+    
+
+    <script type="text/javascript" src="/machinelearning-blog/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+
+</head>
+
+
+    <body>
+
+    <header class="site-header">
+    <div class="container">
+        <a id="site-header-brand" href="/machinelearning-blog/" title="Park Seungil">
+            <span class="octicon octicon-mark-github"></span> Park Seungil
+        </a>
+        <nav class="site-header-nav" role="navigation">
+            
+            <a href="/machinelearning-blog/"
+               class=" site-header-nav-item hvr-underline-from-center"
+               target=""
+               title="Home">
+                Home
+            </a>
+            
+            <a href="/machinelearning-blog/open-source"
+               class=" site-header-nav-item hvr-underline-from-center"
+               target=""
+               title="Open-Source">
+                Open-Source
+            </a>
+            
+            <a href="/machinelearning-blog/blog"
+               class=" site-header-nav-item hvr-underline-from-center"
+               target=""
+               title="Blog">
+                Blog
+            </a>
+            
+            <a href="/machinelearning-blog/bookmark"
+               class=" site-header-nav-item hvr-underline-from-center"
+               target=""
+               title="Bookmark">
+                Bookmark
+            </a>
+            
+            <a href="/machinelearning-blog/about"
+               class=" site-header-nav-item hvr-underline-from-center"
+               target=""
+               title="About">
+                About
+            </a>
+            
+        </nav>
+    </div>
+</header>
+
+
+        <div class="content">
+            <section class="jumbotron geopattern" data-pattern-id="ERNIE:2.0 A Continual pre-traiing framework for language understanding">
+    <div class="container">
+        <div id="jumbotron-meta-info">
+            <h1>ERNIE:2.0 A Continual pre-traiing framework for language understanding</h1>
+            <span class="meta-info">
+                
+                
+                <span class="octicon octicon-calendar"></span> 2019/11/18
+                
+            </span>
+        </div>
+    </div>
+</section>
+<script>
+    $(document).ready(function(){
+
+        $('.geopattern').each(function(){
+            $(this).geopattern($(this).data('pattern-id'));
+        });
+
+    });
+</script>
+<article class="post container" itemscope itemtype="http://schema.org/BlogPosting">
+
+    <div class="row">
+
+        
+        <div class="col-md-8 markdown-body">
+
+            <p>Paper review on “ERNIE:2.0 A Continual pre-traiing framework for language understanding(2019-7-29)”</p>
+
+<h2 id="abstract">Abstract</h2>
+<ul>
+  <li>pre training을 하면서 co-occurence외에 lexical, syntactic, semantic 정보를 찾을 수 있다.</li>
+  <li>이를 위한 continual pre-traiing frame work와 7가지 pre-training task을 제안한다.</li>
+</ul>
+
+<h2 id="introduction">introduction</h2>
+<ul>
+  <li>continual pre training framework ERNIE 2.0을 제안한다. customizined training tasks가 가능하며 multi-task pre-training을 incremental하게 적용한다</li>
+  <li>unsupervised language processing tasks 7가지를 제안하고, BERT와 XLNet에 비해 크게 English, Chinese 에 대해 성능이 향상됨을 보인다.</li>
+  <li><a href="https://github.com/PaddlePaddle/ERNIE.">ERNIE</a>에 코드를 올려놓았다</li>
+</ul>
+
+<h2 id="related-work">Related work</h2>
+
+<h3 id="unsupervised-transfer-learning-for-language-representation">Unsupervised Transfer LEarning for Language Representation</h3>
+<p>기존 objective들은 context independent word embedding을 제안해왔지만, 최근 논문들에선 contextualized language representation을 제안한다.<br />
+* ELMO: context-sensitive features<br />
+* GPT: context-sensitive by transformer<br />
+* BERT: masked language, next sentence prediction<br />
+* XLM: unsupervised method on monolingual data, supervised method leverages parallel bilingual data<br />
+* MT-DNN: multi task supervised task in before fine-tuning<br />
+* XLNet: autoregressive pre-training method bidirectional contexts by maximizing the expected likelihood over all permutations of the factorization order</p>
+
+<h3 id="continual-learning">continual Learning</h3>
+<p>여러개 task를 차례대로 학습한다. 인간이 삶의 지식을 축적하는것 처럼</p>
+
+<h2 id="the-ernie-20-framework">The ERNIE 2.0 Framework</h2>
+
+<h3 id="continual-pre-training">Continual Pre training</h3>
+<ul>
+  <li>unsupervised pre training continually with big data and prior knowledge</li>
+  <li>incrementally  update the ERNIE model via multi task learning</li>
+  <li>sequence-level loss + token-level loss<br />
+<img src="/machinelearning-blog/assets/images/2019-11-18-ERNIE-2-A-Continual-Pre-Training-Framework-For-Language-Understanding-1.png" alt="image-1" /><br />
+<img src="/machinelearning-blog/assets/images/2019-11-18-ERNIE-2-A-Continual-Pre-Training-Framework-For-Language-Understanding-2.png" alt="image-2" /></li>
+</ul>
+
+<h4 id="kind-of-pre-training-task">kind of pre-training task</h4>
+<ol>
+  <li>word-aware task</li>
+  <li>structure-aware task</li>
+  <li>semantic-aware task</li>
+</ol>
+
+<h2 id="ernie-20-model">ERNIE 2.0 Model</h2>
+
+<h3 id="model-structure">Model structure</h3>
+<ol>
+  <li>Transformer Encoder same with BERT</li>
+  <li>Task Embedding: embedding of pre-training task. random select in fine tuning<br />
+<img src="/machinelearning-blog/assets/images/2019-11-18-ERNIE-2-A-Continual-Pre-Training-Framework-For-Language-Understanding-3.png" alt="image-3" /></li>
+</ol>
+
+<h3 id="pre-training-task">Pre-training Task</h3>
+
+<h4 id="word-aware-pre-training-tasks">Word-aware Pre-training Tasks</h4>
+<ol>
+  <li>
+    <p>Knowledge Masking Task<br />
+<strong>phrase masking</strong> and <strong>named entity masking</strong> for catch local contexts and global contexts</p>
+  </li>
+  <li>
+    <p>Capitalization Prediction Task<br />
+대문자는 중요한 의미를 담고있는 경우가 많다. cased model은 named entity recognition과 같은 task에서 좋은 성능을 보인다. 해당 문자가 대문자인지 아닌지 예측하는 task</p>
+  </li>
+  <li>
+    <p>Token-Document Relation Prediction Task<br />
+token이 original document에 있을지 없을지에 대한 여부를 판단. 해당 문서의 key words를 찾을 수 있는 능력을 갖게 된다.</p>
+  </li>
+</ol>
+
+<h4 id="structure-aware-pre-training-tasks">Structure-aware Pre-training Tasks</h4>
+<ol>
+  <li>
+    <p>Sentence Reordering Task<br />
+하나의 문서를 m개의 segments로 나누어서, random permuted order shuffle한 다음 원래 순서를 예측한다.</p>
+  </li>
+  <li>
+    <p>Sentence Distance Task<br />
+3 class classification. 0 는 두개의 문장이 하나의 문서에 인접해있다. 1는 두개의 문장이 하나의 문서에 있지만 인접해있지는 않다. 2 두개의 문장이 관련이 없다.</p>
+  </li>
+</ol>
+
+<h4 id="semantic-aware-pre-training-tasks">Semantic-aware Pre-training Tasks</h4>
+<ol>
+  <li>
+    <p>Discourse Relation Task<br />
+문장간 semantic or rhetorical 관계를 파악한다. <a href="https://arxiv.org/abs/1903.11850">mining discourse markers for unsupervised sentence representation learning</a></p>
+  </li>
+  <li>
+    <p>IR Relevance Task<br />
+3 class classification task which predicts the relationship between a query and a title. Baidu Search Enging을 이용했다.<br />
+0는 강한 상관관계(query를 입력했을 때 title이 클릭된다.), 1은 약한 상관관계(query를 입력했을때 title이 검색되지만 클릭되진않는다), 2는 상관이 아예없는</p>
+  </li>
+</ol>
+
+<h2 id="experiments">Experiments</h2>
+
+<h3 id="pre-training-and-implementation">Pre-training and Implementation</h3>
+<ol>
+  <li>Pre-training Data<br />
+Wikipedia and BookCorpus, Reddit, Discovery data for English<br />
+encyclopedia, news, dialogue, Baidu Search Engine for Chinese<br />
+<img src="/machinelearning-blog/assets/images/2019-11-18-ERNIE-2-A-Continual-Pre-Training-Framework-For-Language-Understanding-4.png" alt="image-4" /></li>
+  <li>Pre-training settings<br />
+same model settings of BERT.
+    <ul>
+      <li>BASE: 12 layers, 12 self-attention heads and 768 dimensional of hidden size</li>
+      <li>LARGE: 24 layers, 16 self-attention heads and 1024 dimensional of hidden size</li>
+      <li>Adam optimizer parameter B_1 = 0.9, B_2 = 0.98 with batch size of 393216 tokens</li>
+      <li>learning rate 5e-e for english, 1.28e-4 for chinese</li>
+      <li>scheduled by decay scheme noam with warmup over the first 4000 steps</li>
+    </ul>
+  </li>
+</ol>
+
+<h3 id="implementation-details">Implementation Details</h3>
+<p>SOTA for every GLUE, MRC tasks both of English and Chinese<br />
+<img src="/machinelearning-blog/assets/images/2019-11-18-ERNIE-2-A-Continual-Pre-Training-Framework-For-Language-Understanding-5.png" alt="image-5" /><br />
+<img src="/machinelearning-blog/assets/images/2019-11-18-ERNIE-2-A-Continual-Pre-Training-Framework-For-Language-Understanding-6.png" alt="image-6" /></p>
+
+<h2 id="conclusion">Conclusion</h2>
+<p>pre-training tasks를 incrementally하게 만들며 continual way로 multi-task learning을 지원하는 Continual Pre-training framework를 제안한다. BERT 와 XLNet에 비해 english, chinese에 대해 높은 성능향상을 보임.</p>
+
+
+
+            <!-- Comments -->
+            
+<div class="comments">
+    <div id="disqus_thread"></div>
+    <script>
+        /**
+         * RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+         * LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables
+         */
+        /*
+         var disqus_config = function () {
+         this.page.url = PAGE_URL; // Replace PAGE_URL with your page's canonical URL variable
+         this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+         };
+         */
+        (function() { // DON'T EDIT BELOW THIS LINE
+            var d = document, s = d.createElement('script');
+
+            s.src = '//my_disque_settings/embed.js';
+
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+</div>
+
+
+        </div>
+
+        <div class="col-md-4">
+            <h3>Post Directory</h3>
+<div id="post-directory-module">
+<section class="post-directory">
+    <!-- Links that trigger the jumping -->
+    <!-- Added by javascript below -->
+    <dl></dl>
+</section>
+</div>
+
+<script type="text/javascript">
+
+    $(document).ready(function(){
+        $( "article h2" ).each(function( index ) {
+            $(".post-directory dl").append("<dt><a class=\"jumper\" hre=#" +
+                    $(this).attr("id")
+                    + ">"
+                    + $(this).text()
+                    + "</a></dt>");
+
+            var children = $(this).nextUntil("h2", "h3")
+
+            children.each(function( index ) {
+                $(".post-directory dl").append("<dd><a class=\"jumper\" hre=#" +
+                        $(this).attr("id")
+                        + ">"
+                        + "&nbsp;&nbsp;- " + $(this).text()
+                        + "</a></dd>");
+            });
+        });
+
+        var fixmeTop = $('#post-directory-module').offset().top - 100;       // get initial position of the element
+
+        $(window).scroll(function() {                  // assign scroll event listener
+
+            var currentScroll = $(window).scrollTop(); // get current position
+
+            if (currentScroll >= fixmeTop) {           // apply position: fixed if you
+                $('#post-directory-module').css({      // scroll to that element or below it
+                    top: '100px',
+                    position: 'fixed',
+                    width: 'inherit'
+                });
+            } else {                                   // apply position: static
+                $('#post-directory-module').css({      // if you scroll above it
+                    position: 'inherit',
+                    width: 'inherit'
+                });
+            }
+
+        });
+
+        $("a.jumper").on("click", function( e ) {
+
+            e.preventDefault();
+
+            $("body, html").animate({
+                scrollTop: ($( $(this).attr('hre') ).offset().top - 100)
+            }, 600);
+
+        });
+    });
+
+</script>
+        </div>
+        
+
+    </div>
+
+</article>
+
+        </div>
+
+    <footer class="container">
+
+    <div class="site-footer">
+
+        <div class="copyright pull-left">
+            <!-- Please keep this line to let others know where this theme comes from. Thank you :D -->
+            Power by <a href="https://github.com/psi9730/development-blog">psi9730</a>
+        </div>
+
+        <a href="https://github.com/psi9730" target="_blank" aria-label="view source code">
+            <span class="mega-octicon octicon-mark-github" title="GitHub"></span>
+        </a>
+
+        <div class="pull-right">
+            <a href="javascript:window.scrollTo(0,0)" >TOP</a>
+        </div>
+
+    </div>
+
+    <!-- Third-Party JS -->
+    <script type="text/javascript" src="/machinelearning-blog/bower_components/geopattern/js/geopattern.min.js"></script>
+
+    <!-- My JS -->
+    <script type="text/javascript" src="/machinelearning-blog/assets/js/script.js"></script>
+
+    
+
+    
+
+</footer>
+
+
+    </body>
+
+</html>
