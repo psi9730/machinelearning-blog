@@ -1,7 +1,7 @@
 # My Development Blog
 
 ## postings
-[My Postings](https://psi9730.github.io/development-blog/blog)
+[My Postings](https://psi9730.github.io/machinelearning-blog)
 * 2019-10-17-Attention-Is-All-You-Need
 * 2019-10-20-Universal-Sentence-Encoder
 * 2019-10-22-Self-Attention-With-Relative-Position_representations
